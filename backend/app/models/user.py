@@ -17,3 +17,7 @@ class User(Base):
     role = Column(String(50), default="user")
 
     created_at = Column(DateTime(timezone=True), server_default=func.now())
+
+    
+    from sqlalchemy.orm import relationship
+    cameras = relationship("Camera", back_populates="owner")
