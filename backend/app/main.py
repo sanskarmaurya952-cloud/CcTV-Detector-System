@@ -19,3 +19,6 @@ from app.api import camera
 
 app.include_router(camera.router)
 
+from app.api import health
+
+app.include_router(health.router)
