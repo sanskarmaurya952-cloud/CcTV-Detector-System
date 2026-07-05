@@ -1,46 +1,42 @@
 import cv2
-from ultralytics import YOLO
 
-model = YOLO("yolov8n.pt")
+from app.services.camera_stream import CameraStream
+from app.services.detector import Detector
 
 
 def generate_frames(camera_url: str):
 
-    cap = cv2.VideoCapture(camera_url)
-    cap.set(cv2.CAP_PROP_BUFFERSIZE, 1)
-
-    if not cap.isOpened():
-        raise Exception("Unable to open camera stream.")
-
-    frame_count = 0
-    output_frame = None
+    camera = CameraStream(camera_url).start()
+    detector = Detector().start()
 
     while True:
-        success, frame = cap.read()
 
-        if not success:
-            break
+        # Latest camera frame
+        frame = camera.read()
 
-        frame = cv2.resize(frame, (640, 480))
-        frame_count += 1
+        if frame is None:
+            continue
 
-        if frame_count % 3 == 0:
-            results = model(
-                frame,
-                imgsz=320,
-                conf=0.5,
-                verbose=False
-            )
-            output_frame = results[0].plot()
+        frame = cv2.resize(frame, (416, 416))
 
-        if output_frame is None:
-            output_frame = frame
+        # Detector ko frame do
+        detector.update(frame)
+
+        # Latest processed frame lo
+        output = detector.get_frame()
+
+        # Starting me jab detection complete na hua ho
+        if output is None:
+            output = frame
 
         ret, buffer = cv2.imencode(
             ".jpg",
-            output_frame,
-            [cv2.IMWRITE_JPEG_QUALITY, 70]
+            output,
+            [cv2.IMWRITE_JPEG_QUALITY, 60]
         )
+
+        if not ret:
+            continue
 
         yield (
             b"--frame\r\n"
@@ -48,5 +44,3 @@ def generate_frames(camera_url: str):
             + buffer.tobytes()
             + b"\r\n"
         )
-
-    cap.release()
