@@ -5,7 +5,7 @@ from app.db.database import engine, Base
 # Import all models
 from app.models.user import User
 from app.models.camera import Camera
-
+from app.models.alert import Alert
 from app.api.auth import router as auth_router
 
 

@@ -1,6 +1,10 @@
 import threading
 import queue
+
 from ultralytics import YOLO
+
+from app.services.intrusion import IntrusionDetector
+from app.services.alert import AlertService
 
 
 class Detector:
@@ -8,7 +12,9 @@ class Detector:
     def __init__(self):
         self.model = YOLO("yolov8n.onnx")
 
-        # Latest frame only
+        self.intrusion = IntrusionDetector()
+        self.alert = AlertService()
+
         self.input_queue = queue.Queue(maxsize=1)
         self.output_frame = None
 
@@ -31,7 +37,6 @@ class Detector:
 
     def update(self, frame):
 
-        # Purana frame hata do
         if self.input_queue.full():
             try:
                 self.input_queue.get_nowait()
@@ -61,15 +66,24 @@ class Detector:
                 frame,
                 imgsz=224,
                 conf=0.45,
-                classes=[0],      # Sirf person
+                classes=[0],
                 max_det=3,
                 verbose=False
             )
 
-            output = results[0].plot()
+            intrusion, output = self.intrusion.check(results, frame)
+
+            if intrusion:
+                # Abhi sirf console alert
+                self.alert.trigger(
+                    camera_id=1,
+                    alert_type="INTRUSION",
+                    frame=output
+                )
 
             with self.lock:
                 self.output_frame = output
 
     def stop(self):
+
         self.running = False
