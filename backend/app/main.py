@@ -25,3 +25,6 @@ app.include_router(health.router)
 
 from app.api import stream
 app.include_router(stream.router)
+
+from app.api import alerts
+app.include_router(alerts.router)
