@@ -19,7 +19,7 @@ SentinelAI is an enterprise-grade AI-powered SaaS platform that continuously mon
 
 ### 👨‍💻 Team Members
 
-- Sanskar Maurya *(Team Leader)*
+
 - Rahul Kumar
 - Rachit Gupta
 - Saksham Sahu
@@ -329,111 +329,7 @@ Dashboard Analytics
 
 ---
 
-# 📂 Project Structure
 
-```text
-SentinelAI/
-
-│
-
-├── backend/
-
-│ ├── api/
-
-│ ├── core/
-
-│ ├── db/
-
-│ ├── models/
-
-│ ├── repositories/
-
-│ ├── schemas/
-
-│ ├── services/
-
-│ ├── utils/
-
-│ └── main.py
-
-│
-
-├── frontend/
-
-│
-
-├── docs/
-
-│
-
-├── docker/
-
-│
-
-├── README.md
-
-│
-
-└── docker-compose.yml
-```
-
----
-
-# 🚀 Installation
-
-## Clone Repository
-
-```bash
-git clone https://github.com/your-username/SentinelAI.git
-
-cd SentinelAI
-```
-
----
-
-## Backend Setup
-
-```bash
-cd backend
-
-python -m venv venv
-```
-
-### Windows
-
-```bash
-venv\Scripts\activate
-```
-
-### Linux / macOS
-
-```bash
-source venv/bin/activate
-```
-
-Install Dependencies
-
-```bash
-pip install -r requirements.txt
-```
-
-Run Backend
-
-```bash
-uvicorn app.main:app --reload
-```
-
----
-
-## Frontend Setup
-
-```bash
-cd frontend
-
-npm install
-
-npm run dev
-```
 
 ---
 
@@ -452,33 +348,7 @@ npm run dev
 
 ---
 
-# 🗺️ Roadmap
 
-## Phase 1
-
-- User Authentication
-- Camera Management
-- Live Streaming
-
-## Phase 2
-
-- AI Object Detection
-- Suspicious Activity Detection
-- Camera Health Engine
-
-## Phase 3
-
-- Trust Score Engine
-- Real-Time Alerts
-- Incident Timeline
-
-## Phase 4
-
-- AI Copilot
-- Predictive Camera Maintenance
-- Mobile Application
-
----
 
 # 🔮 Future Scope
 
@@ -563,7 +433,7 @@ This project is licensed under the **MIT License**.
 
 ## 👨‍💻 Team Members
 
-- Sanskar Maurya
+
 - Rahul Kumar
 - Rachit Gupta
 - Saksham Sahu
